@@ -1,0 +1,26 @@
+
+.App .section ul{
+  width:80%;
+  border:1px solid #000;  
+  float:left;
+  text-align: center;
+  box-sizing:border-box;
+}
+
+.App .section ul li{
+  padding:5px 0;
+  box-sizing:border-box;
+}
+
+.App .section .add_web{
+  float:left;
+  width:20%;
+  border:1px solid #000;
+  box-sizing:border-box;
+}
+.App .section .add_web input{
+  display:block;
+  width:100%;
+  padding: 20px 0;
+  cursor:pointer;
+}
