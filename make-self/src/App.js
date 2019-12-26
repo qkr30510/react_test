@@ -1,38 +1,42 @@
 import React, { Component } from 'react';
 import './App.css';
-import Header from './Component/Header';
-import Weblist from './Component/Weblist';
-import Clicksite from './Component/Clicksite';
 
 
 class App extends Component {
-  state = {
-    selected_content_id:0,
-    contents:[
-      {id:0, title:'네이버'},
-      {id:1, title:'다음'},
-      {id:2, title:'구글'},
-      {id:3, title:'네이트'}
-    ]
-  }
-  getSelectedContent(){
-    var i = 0;
-    while(i < this.state.contents.length){
-      var data = this.state.contents[i];
-      if (this.state.selected_content_id === data.id){
-        return data;
-      }
-        i = i + 1;        
-    }
-  }
 	render(){
-    //var content = this.getSelectedContent();
-    //console.log(content);
+
 		return(
          <div className="App">
-            <Header title="한국인이 좋아하는 웹 사이트들"></Header>
-            <Weblist data={this.state.contents}></Weblist>
-            <Clicksite>{this.getSelectedContent}</Clicksite>
+            <div className="wrap">
+              <nav><ul>
+                <li><a href="">사람</a></li>
+                <li><a href="">채팅칸</a></li>
+              </ul></nav>
+              <div className="friendBox">
+                <div className="box_tit">
+                  <div className="box_tit_up">
+                    <h3>친구</h3>
+                    <button>친구추가 아이콘</button>
+                  </div>
+                  <div className="search_icon">
+                    <input type="text"/>
+                  </div>
+                </div>
+                <div className="people_list_box">
+                  <div className="myBox">
+                    <div className="profile_img"><img src="" alt=""/></div>
+                    <div className="profile_name">Lilo 주희</div>
+                    <div className="profile_text">친구가..0명......</div>
+                  </div>                 
+                  <div className="friend_listBox">
+                    <div className="profile_img"><img src="" alt=""/></div>
+                    <div className="profile_name">Lilo 주희</div>
+                    <div className="profile_text">친구가..0명......</div>                  
+                  </div>   
+                </div>
+              </div>
+              <div className="chatBox"></div>              
+            </div>
          </div>
 		)
 	}

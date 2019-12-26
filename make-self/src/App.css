@@ -3,18 +3,5 @@ ul,li,ol{list-style:none;}
 a{text-decoration: none;}
 
 .App{
-  background:#f9f9f9;
-  padding: 10px;
-}
-
-.App .section{
-  width:calc(100% - 20%);
-  margin:auto;
   
 }
-.App .section:after{
-  content:"";
-  display: block;
-  clear:both;
-}
-
