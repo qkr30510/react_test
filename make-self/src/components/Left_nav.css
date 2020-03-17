@@ -1,0 +1,16 @@
+nav {
+    width:150px;    
+    height:100vh;    
+    background:#eee;    
+    float:left;
+    text-align: center;
+}
+
+ul{
+    padding-top:50px;
+}
+
+li{
+    height:80px;
+    line-height:80px;
+}
