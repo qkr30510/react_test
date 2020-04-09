@@ -1,36 +1,20 @@
-import React, {useCallback} from 'react';
+import React from 'react';
 import TodoListItem from './TodoListItem';
-import { List } from 'react-virtualized';
 import './TodoList.scss';
 
 const TodoList = ({ todos, onRemove, onToggle }) => {
-  const rowRenderer = useCallback(
-    ({ index, key, style }) => {
-      const todo = todos[index];
-      return (
+  return (
+    <div className="TodoList">
+      {todos.map(todo => (
         <TodoListItem
           todo={todo}
-          key={key}
+          key={todo.id}
           onRemove={onRemove}
           onToggle={onToggle}
-          style={style}
         />
-      );
-    },
-    [onRemove, onToggle, todos],
-  );
-
-  return (
-    <List
-      className="TodoList"
-      width={495}
-      height={413}
-      rowCount={todos.length}
-      rowHeight={57}
-      rowRenderer={rowRenderer}
-      list={todos}
-      style={{ outline: 'none' }}
-    />
+      ))}
+    </div>
   );
 };
+
 export default React.memo(TodoList);

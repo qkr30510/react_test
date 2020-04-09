@@ -12,7 +12,7 @@ const TodoInsert = ({ onInsert }) => {
   const onClick = useCallback(
     () => {
       if (!value) {
-        //alert('값을 입력해주세요');
+        alert('값을 입력해주세요');
         return false;
       }
     const fValue = value.split('\n').map( (line, i) => {
