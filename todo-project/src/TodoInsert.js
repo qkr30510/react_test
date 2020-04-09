@@ -4,31 +4,44 @@ import './TodoInsert.scss';
 
 const TodoInsert = ({ onInsert }) => {
   const [value, setValue] = useState('');
-  
-  const onChange = useCallback(e => {
+
+  const onChange = useCallback((e) => {
     setValue(e.target.value);
   }, []);
 
-  const onSubmit = useCallback(
-    e => {
-      onInsert(value);
-      setValue(''); // value 초기화
-      // submit 이벤트는 브라우저에서 새로고침을 발생시킵니다.
-      //이를 방지하기 위해 이 함수를 호출합니다.
-      e.preventDefault();
-    },
-    [onInsert, value],
-  );
+  const onClick = useCallback(
+    () => {
+      if (!value) {
+        //alert('값을 입력해주세요');
+        return false;
+      }
+    const fValue = value.split('\n').map( (line, i) => {
+    return (<span key={i}>{line}<br/></span>)
+    })
+    onInsert(fValue);
+    setValue(''); // value 초기화
+  }, [onInsert, value]);
 
+   const onKeyPress = (e) => {
+    if(e.key === 'Enter') {
+      if (e.key === 'Enter' && e.shiftKey ) {
+        return;
+      }
+      onClick();  
+      e.preventDefault();
+    }
+
+  };
   return (
-    <form className="TodoInsert" onSubmit={onSubmit}>
-      <input
-        type="text"
-        placeholder="할일을 입력하세요."
-        value={value}
+    <form className="TodoInsert">
+      <textarea
+        className="write"
         onChange={onChange}
-      />
-      <button type="submit">
+        value={value}
+        placeholder="할 일을 입력하세요"
+        onKeyPress={onKeyPress}
+      ></textarea>
+      <button type="button" onClick={onClick}>
         <MdAdd />
       </button>
     </form>
