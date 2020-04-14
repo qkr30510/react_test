@@ -18,6 +18,7 @@ const TodoInsert = ({ onInsert }) => {
     const fValue = value.split('\n').map( (line, i) => {
     return (<span key={i}>{line}<br/></span>)
     })
+
     onInsert(fValue);
     setValue(''); // value 초기화
   }, [onInsert, value]);
@@ -32,6 +33,11 @@ const TodoInsert = ({ onInsert }) => {
     }
 
   };
+
+  /*const onModify = () => {
+    setValue(value);
+  }
+  */
   return (
     <form className="TodoInsert">
       <textarea
@@ -40,6 +46,7 @@ const TodoInsert = ({ onInsert }) => {
         value={value}
         placeholder="할 일을 입력하세요"
         onKeyPress={onKeyPress}
+        //onModify={onModify}
       ></textarea>
       <button type="button" onClick={onClick}>
         <MdAdd />

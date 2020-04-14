@@ -8,8 +8,8 @@ function createBulkTodos() {
   for (let i = 1; i <= 2; i++) {
     array.push({
       id: i,
-      text: `ksjfkljjldsjflksdjflkdjflksjlj;alksfjlkskklsdafksdjflkasjdklfsd,fn,madnfkjashdfhdhfiosdklndkldklslkksjfkljjldsjflksdjlksdjflkdjflksjlj;alksfjlkskklsdafksdjflkasjdklfsd,fn,madnfkjashdfhdhfiosdklndkldklslkksjfkljjldsjflksdjflkdjflksjlj;alksfjlkskklsdafksdjflkasjdklfsd,fn,madnfkjashdfhdhfiosdklndflkdjflksjlj;alksfjlkskklsdafksdjflkasjdklfsd,fn,madnfkjashdfhdhfiosdklndkld ${i}`,
-      checked: false,
+      text: `할 일 ${i}`,
+      checked: false,      
     });
   }
   return array;
@@ -27,6 +27,7 @@ function todoReducer(todos, action) {
       //{type: 'TOGGLE'}
       return todos.map(todo =>
         todo.id === action.id ? { ...todo, checked: !todo.checked } : todo,
+        // 삼한연산자 todo.id 값이 action.id 값과 같으면 { ...todo, checked: !todo.checked } 실행하고 그렇지 않으면 값을 리턴 
       );
     default:
       return todos;
@@ -54,13 +55,14 @@ const App = () => {
     dispatch({ type: 'REMOVE', id });
   }, []);
 
-  const onToggle = useCallback(id => {
+ const onToggle = useCallback(id => {
     dispatch({ type: 'TOGGLE', id });
   }, []);
+   
 
   return (
     <Message>
-      <TodoInsert onInsert={onInsert} />
+      <TodoInsert onInsert={onInsert}/>
       <TodoList todos={todos} onRemove={onRemove} onToggle={onToggle} />
     </Message>
   );
