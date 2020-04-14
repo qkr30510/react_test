@@ -29,6 +29,9 @@ function todoReducer(todos, action) {
         todo.id === action.id ? { ...todo, checked: !todo.checked } : todo,
         // 삼한연산자 todo.id 값이 action.id 값과 같으면 { ...todo, checked: !todo.checked } 실행하고 그렇지 않으면 값을 리턴 
       );
+      case 'FIX':// 수정
+      //{type:'FIX'}
+      return todos.get(todo => todo.text)
     default:
       return todos;
   }
@@ -58,12 +61,16 @@ const App = () => {
  const onToggle = useCallback(id => {
     dispatch({ type: 'TOGGLE', id });
   }, []);
-   
+
+  const onFix = useCallback(text => {
+    dispatch({ type: 'FIX', text });
+  }, []);
+
 
   return (
     <Message>
       <TodoInsert onInsert={onInsert}/>
-      <TodoList todos={todos} onRemove={onRemove} onToggle={onToggle} />
+      <TodoList todos={todos} onRemove={onRemove} onToggle={onToggle} onFix={onFix}/>
     </Message>
   );
 };
