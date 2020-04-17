@@ -1,7 +1,8 @@
-import React, { useReducer, useRef, useCallback } from 'react';
+import React, { useReducer, useRef, useCallback, useState } from 'react';
 import Message from './Message';
 import TodoInsert from './TodoInsert';
 import TodoList from './TodoList';
+import { MdSettingsBrightness } from 'react-icons/md';
 
 function createBulkTodos() {
   const array = [];
@@ -10,10 +11,12 @@ function createBulkTodos() {
       id: i,
       text: `할 일 ${i}`,
       checked: false,      
+      isModify: false,
     });
   }
   return array;
 }
+
 
 function todoReducer(todos, action) {
   switch (action.type) {
@@ -29,16 +32,21 @@ function todoReducer(todos, action) {
         todo.id === action.id ? { ...todo, checked: !todo.checked } : todo,
         // 삼한연산자 todo.id 값이 action.id 값과 같으면 { ...todo, checked: !todo.checked } 실행하고 그렇지 않으면 값을 리턴 
       );
-      case 'FIX':// 수정
-      //{type:'FIX'}
-      return todos.get(todo => todo.text)
+      case 'FIX': //수정    
+      return todos.map(todo =>
+        todo.id === action.id ? { ...todo, isModify: !todo.isModify } : todo,
+      );       
     default:
       return todos;
   }
 }
 
 const App = () => {
-  const [todos, dispatch] = useReducer(todoReducer, undefined, createBulkTodos);
+  const [todos, dispatch] = useReducer(todoReducer, undefined, createBulkTodos, );
+  const [initText,setinitText] = useState('');
+  const [btn,setbtn] = useState('');
+
+  //initText는 현재 값, setinitText는 생성될 값
 
   //고윳값으로 사용될 id
   // ref를 사용하여 변수 담기
@@ -49,6 +57,7 @@ const App = () => {
       id: nextId.current,
       text,
       checked: false,
+      isModify: false,
     };
     dispatch({ type: 'INSERT', todo });
     nextId.current += 1; // nextId 1씩 더하기
@@ -59,20 +68,24 @@ const App = () => {
   }, []);
 
  const onToggle = useCallback(id => {
+    
     dispatch({ type: 'TOGGLE', id });
   }, []);
 
-  const onFix = useCallback(text => {
-    dispatch({ type: 'FIX', text });
-  }, []);
-
-
+  const onFix = useCallback((id, text, isModify) => {    
+    setinitText(text);
+    setbtn(isModify);
+    // 현재 생성되어있는 id와 text 값을 onFix에 담고 setinitText(생성될 값)에 text로 담아라 
+    dispatch({type:'FIX', id});
+  },[]);
+    
+  
   return (
     <Message>
-      <TodoInsert onInsert={onInsert}/>
-      <TodoList todos={todos} onRemove={onRemove} onToggle={onToggle} onFix={onFix}/>
+      <TodoInsert onInsert={onInsert} initText={initText} btn={btn}/>
+      <TodoList todos={todos} onRemove={onRemove} onToggle={onToggle} onFix={onFix} />
     </Message>
   );
-};
+}; 
 
 export default App;

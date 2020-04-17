@@ -1,0 +1,80 @@
+.TodoListItem-virtualized + .TodoListItem-virtualized {
+  border-top: 1px solid #000;
+}
+
+.TodoListItem-virtualized:nth-child(even) {
+  background: #f8f9fa;
+}
+
+.TodoListItem {
+  padding: 1rem;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+}
+
+.TodoListItem:nth-child(even) {
+  background: #f8f9fa;
+}
+
+.TodoListItem .checkbox {
+  cursor: pointer;
+  -webkit-box-flex: 1;
+      -ms-flex: 1;
+          flex: 1;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+}
+
+.TodoListItem .checkbox svg {
+  font-size: 1.5rem;
+}
+
+.TodoListItem .checkbox .text {
+  margin-left: 0.5rem;
+  -webkit-box-flex: 1;
+      -ms-flex: 1;
+          flex: 1;
+  word-break: break-all;
+}
+
+.TodoListItem .checkbox.checked svg {
+  color: #22b8cf;
+}
+
+.TodoListItem .checkbox.checked .text {
+  color: #adb5bd;
+  text-decoration: line-through;
+}
+
+.TodoListItem .fix {
+  cursor: pointer;
+}
+
+.TodoListItem .remove {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  font-size: 1.5rem;
+  color: #ff6b6b;
+  cursor: pointer;
+}
+
+.TodoListItem .remove:hover {
+  color: #ff8787;
+}
+
+.TodoListItem + .TodoListItem {
+  border-top: 1px solid #dee2e6;
+}
+/*# sourceMappingURL=TodoListItem.css.map */
