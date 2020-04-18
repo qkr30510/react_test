@@ -2,13 +2,16 @@ import React, { useState, useCallback, useEffect } from 'react';
 import { MdAdd } from 'react-icons/md';
 import './TodoInsert.scss';
 
-const TodoInsert = ({ onInsert, initText, btn }) => {
+const TodoInsert = ({ onInsert, initText, btn, ModifyClick, id }) => {
   const [value, setValue] = useState('');
+ // console.log("btn상태",btn)
+  console.log(initText, id)
   //const [initText , setinitText] = useState('');
-  //console.log(initText)
+  
   useEffect(() => {
-    setValue(initText);
+    setValue(initText);  
   }, [initText]);
+
 
   const onChange = useCallback((e) => {
     setValue(e.target.value);
@@ -18,7 +21,7 @@ const TodoInsert = ({ onInsert, initText, btn }) => {
     if (!value) {
       alert('값을 입력해주세요');
       return false;
-    }
+    }    
     const fValue = value.split('\n').map((line, i) => {
       return (
         <span key={i}>
@@ -27,9 +30,11 @@ const TodoInsert = ({ onInsert, initText, btn }) => {
         </span>
       );
     });
-
+    
+   //const fValue = value;
     onInsert(fValue);
     setValue(''); // value 초기화
+    
   }, [onInsert, value]);
 
   const onKeyPress = (e) => {
@@ -42,10 +47,6 @@ const TodoInsert = ({ onInsert, initText, btn }) => {
     }
   };
 
-  /*const onModify = () => {
-    setValue(value);
-  }
-  */
   return (
     <form className="TodoInsert">
       <textarea
@@ -54,15 +55,15 @@ const TodoInsert = ({ onInsert, initText, btn }) => {
         value={value}
         placeholder="할 일을 입력하세요"
         onKeyPress={onKeyPress}
-        //onModify={onModify}
       ></textarea>
-      {btn === true ? (
-        <button type="button" onClick={onClick}>
-          <MdAdd />
+      {btn === false ?  (
+        <button type="button"  onClick={()=> ModifyClick(btn, value,onInsert,setValue, id ) }>
+          수정
         </button>
       ) : (
         <button type="button" onClick={onClick}>
-          수정하기
+          <MdAdd />
+          
         </button>
       )}
     </form>

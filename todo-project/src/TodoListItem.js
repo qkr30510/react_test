@@ -10,11 +10,9 @@ import './TodoListItem.scss';
 
 const TodoListItem = ({ todo, onRemove, onToggle, onFix }) => {
   const { id, text, checked, isModify } = todo;
+ 
 
-  console.log(todo)
-  console.log(todo.isModify)
-
-  return (
+  return (    
     <div className="TodoListItem">
       <div className={cn('checkbox', { checked })} onClick={() => onToggle(id)}>
         {checked ? <MdCheckBox /> : <MdCheckBoxOutlineBlank />}
@@ -23,7 +21,7 @@ const TodoListItem = ({ todo, onRemove, onToggle, onFix }) => {
       <div className="fix" onClick={() => onFix(id,text,isModify)}>
         <TiPencil />
       </div>
-      <div className="remove" onClick={() => onRemove(id)}>
+      <div className="remove" onClick={() => onRemove(id)} >
         <MdRemoveCircleOutline />
       </div>
     </div>

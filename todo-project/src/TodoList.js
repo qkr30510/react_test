@@ -4,9 +4,11 @@ import './TodoList.scss';
 
  
 
-const TodoList = ({ todos, onRemove, onToggle, onFix }) => {
+const TodoList = ({ todos, onRemove, onToggle, onFix, btn }) => {
+  
   return (
     <div className="TodoList">
+      {(btn === false) ? (<div className="TodoListSub"></div>) : (<></>)}
       {todos.map((todo) => (
         <TodoListItem
           todo={todo}
@@ -14,6 +16,7 @@ const TodoList = ({ todos, onRemove, onToggle, onFix }) => {
           onRemove={onRemove}
           onToggle={onToggle}
           onFix={onFix}
+          
         />
       ))}
     </div>
