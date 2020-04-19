@@ -5,7 +5,7 @@ import './TodoInsert.scss';
 const TodoInsert = ({ onInsert, initText, btn, ModifyClick, id }) => {
   const [value, setValue] = useState('');
  // console.log("btn상태",btn)
-  console.log(initText, id)
+  //console.log(initText, id)
   //const [initText , setinitText] = useState('');
   
   useEffect(() => {
@@ -32,7 +32,8 @@ const TodoInsert = ({ onInsert, initText, btn, ModifyClick, id }) => {
     });
     
    //const fValue = value;
-    onInsert(fValue);
+    //onInsert(fValue);
+    onInsert(value);
     setValue(''); // value 초기화
     
   }, [onInsert, value]);
