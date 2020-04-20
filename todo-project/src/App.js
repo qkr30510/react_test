@@ -68,30 +68,28 @@ const App = () => {
     nextId.current += 1; // nextId 1씩 더하기
   }, []);
 
-  const fnInsert = (initText, value) => {
-    
-    const NextTodo = {
-      id: initText[0],
-      text: value,
-      checked: false,
-      isModify: false,
-    };
-    const fixtodo = [
-      ...todos,
-      {...todos[initText[1]],...NextTodo}
-    ];
+  const fnInsert = (initText, value, setValue) => {
+    // console.log(todos[initText[1] - 1]);
+    // const NextTodo = {
+    //   id: initText[1],
+    //   text: value,
+    //   checked: false,
+    //   isModify: false,
+    // };
+
+    const NextTodo = { ...todos[initText[1] - 1], text: value };
+
+    const fixtodo = todos.splice(initText[1] - 1, 1, NextTodo);
     // const fixtodo = todos.filter((v) => {
     //   console.log(initText[1], v.id === initText[1], value )
     //   return v.id === initText[1] ? {
     //         ...v,
     //         text: value,
     //       } : v;
-    });
-
-    
+    // }
+    setValue('');
     dispatch({ type: 'FIX', fixtodo });
   };
-
   const onRemove = useCallback((id) => {
     dispatch({ type: 'REMOVE', id });
   }, []);
@@ -107,7 +105,6 @@ const App = () => {
   }, []);
 
   const ModifyClick = (btn, value, onInsert, setValue, id) => {
-    
     //Setbtn(!btn);
     if (!value) {
       alert('값을 입력해주세요');
@@ -128,7 +125,7 @@ const App = () => {
     // setValue(''); // value 초기화
     //todos.id === id ? fnInsert(fValue):onInsert(fValue);
 
-    todos.id === id ? fnInsert(initText, value) : onInsert(value, id);
+    todos.id === id ? fnInsert(initText, value, setValue) : onInsert(value, id);
   };
 
   // console.log("dddd"+initText)
