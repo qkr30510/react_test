@@ -12,6 +12,7 @@ const TodoListItem = ({ todo, onRemove, onToggle, onFix }) => {
   const { id, text, checked, isModify } = todo;
  
 
+
   return (    
     <div className="TodoListItem">
       <div className={cn('checkbox', { checked })} onClick={() => onToggle(id)}>

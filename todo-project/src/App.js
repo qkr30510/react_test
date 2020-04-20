@@ -1,9 +1,4 @@
-import React, {
-  useReducer,
-  useRef,
-  useCallback,
-  useState,
-} from 'react';
+import React, { useReducer, useRef, useCallback, useState } from 'react';
 import Message from './Message';
 import TodoInsert from './TodoInsert';
 import TodoList from './TodoList';
@@ -25,7 +20,7 @@ function todoReducer(todos, action) {
   switch (action.type) {
     case 'INSERT': // 새로 추가
       //{type: 'INSERT', todo: {id: 1, text: 'todo', checked:false}}
-      return todos.concat(action.todo);      
+      return todos.concat(action.todo);
     case 'REMOVE': //제거
       //{type:'REMOVE', id:1}
       return todos.filter((todo) => todo.id !== action.id);
@@ -37,9 +32,9 @@ function todoReducer(todos, action) {
         // 삼한연산자 todo.id 값이 action.id 값과 같으면 { ...todo, checked: !todo.checked } 실행하고 그렇지 않으면 값을 리턴
       );
     case 'FIX': //수정
-     return todos.map(todo =>
-        todo.id === action.id ? { todo, text: action.text } : todo,
-      );
+      console.log(action.fixtodo);
+      return todos;
+
     default:
       return todos;
   }
@@ -47,11 +42,11 @@ function todoReducer(todos, action) {
 
 const App = () => {
   const [todos, dispatch] = useReducer(todoReducer, undefined, createBulkTodos);
-  const fixtodos = {...todos}
-  console.log("fixtodos",fixtodos)
+  const fixtodo = { ...todos };
+  //console.log("fixtodos",fixtodos)
 
   // const [onModify, setOnModify] = useState('');
-  const [initText, setinitText] = useState('');
+  const [initText, setinitText] = useState([]);
   const [btn, Setbtn] = useState('true');
   //Setbtn(!btn) 불리언은 이런식으로 바로 해결!
 
@@ -68,14 +63,34 @@ const App = () => {
       checked: false,
       isModify: false,
     };
+
     dispatch({ type: 'INSERT', todo });
     nextId.current += 1; // nextId 1씩 더하기
   }, []);
 
-  const fnInsert = useCallback((text) => {
+  const fnInsert = (initText, value) => {
     
-    dispatch({ type: 'FIX', text });
-  }, []);
+    const NextTodo = {
+      id: initText[0],
+      text: value,
+      checked: false,
+      isModify: false,
+    };
+    const fixtodo = [
+      ...todos,
+      {...todos[initText[1]],...NextTodo}
+    ];
+    // const fixtodo = todos.filter((v) => {
+    //   console.log(initText[1], v.id === initText[1], value )
+    //   return v.id === initText[1] ? {
+    //         ...v,
+    //         text: value,
+    //       } : v;
+    });
+
+    
+    dispatch({ type: 'FIX', fixtodo });
+  };
 
   const onRemove = useCallback((id) => {
     dispatch({ type: 'REMOVE', id });
@@ -86,35 +101,37 @@ const App = () => {
   }, []);
 
   const onFix = useCallback((id, text, isModify) => {
-    //console.log(text);
-    setinitText(text, id);
+    setinitText([text, id]);
     Setbtn(isModify);
-
     // 현재 생성되어있는 id와 text 값을 onFix에 담고 setinitText(생성될 값)에 text로 담아라
-    dispatch({ type: 'FIX', id });
   }, []);
 
-  const ModifyClick = useCallback((btn, value, onInsert, setValue, id) => {
-    Setbtn(!btn);    
+  const ModifyClick = (btn, value, onInsert, setValue, id) => {
+    
+    //Setbtn(!btn);
     if (!value) {
       alert('값을 입력해주세요');
+      Setbtn(btn);
       return false;
+    } else {
+      Setbtn(!btn);
     }
-    const fValue = value.split('\n').map((line, i) => {
-      return (
-        <span key={i}>
-          {line}
-          <br />
-        </span>
-      );
-    });
+    // const fValue = value.split('\n').map((line, i) => {
+    //   return (
+    //     <span key={i}>
+    //       {line}
+    //       <br />
+    //     </span>
+    //   );
+    // });
     //const fValue = value;
-    setValue(''); // value 초기화
+    // setValue(''); // value 초기화
     //todos.id === id ? fnInsert(fValue):onInsert(fValue);
-    todos.id === id ? fnInsert(value):onInsert(fValue);
-  }, []);
 
+    todos.id === id ? fnInsert(initText, value) : onInsert(value, id);
+  };
 
+  // console.log("dddd"+initText)
   return (
     <Message>
       <TodoInsert
@@ -125,6 +142,7 @@ const App = () => {
       />
       <TodoList
         todos={todos}
+        fixtodo={fixtodo}
         onRemove={onRemove}
         onToggle={onToggle}
         onFix={onFix}
