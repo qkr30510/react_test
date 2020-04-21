@@ -69,24 +69,23 @@ const App = () => {
   }, []);
 
   const fnInsert = (initText, value, setValue) => {
-    // console.log(todos[initText[1] - 1]);
-    // const NextTodo = {
-    //   id: initText[1],
-    //   text: value,
-    //   checked: false,
-    //   isModify: false,
-    // };
+    const fixtodo = todos;
+    // const arr02 = [...todos]
+    // console.log(arr02===todos)
+    const Index = initText[1];
+    fixtodo[Index - 1] = {
+      ...fixtodo[Index - 1],
+      text: value,
+    };
+    // fixttodo를 todos에 전체 복사해서 해당 index를 찾음
+    // 나는 id가 1부터 시작하기 때문에  -1부터 처리해야함
+    // 스프레드 연산자는 사용하면 리액트가 변화값이라고 인식하기 떄문에 ...fixtodo한번 더 쓰고 
+    // text값 을 바꾸기 위해 적어줌 
 
-    const NextTodo = { ...todos[initText[1] - 1], text: value };
+      //  아래 코드로도 변경 가능하지만 권유 하진 않음 // 
+    // const NextTodo = { ...todos[initText[1] - 1], text: value };
+    // const fixtodo = todos.splice(initText[1] - 1, 1, NextTodo);
 
-    const fixtodo = todos.splice(initText[1] - 1, 1, NextTodo);
-    // const fixtodo = todos.filter((v) => {
-    //   console.log(initText[1], v.id === initText[1], value )
-    //   return v.id === initText[1] ? {
-    //         ...v,
-    //         text: value,
-    //       } : v;
-    // }
     setValue('');
     dispatch({ type: 'FIX', fixtodo });
   };
